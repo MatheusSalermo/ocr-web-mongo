@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Buscar Placa - PlacaView</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Buscar Placa</h1>
+    <form method="post" style="margin-top: 20px;">
+  <input type="text" name="placa" placeholder="Digite a placa (ex: ABC-1234)" required class="input-placa">
+  <button type="submit" class="botao-buscar">Buscar</button>
+</form>
+
+
+    <br>
+    <a href="/" style="color:#00aaff;">⬅ Voltar</a>
+
+    {% if mensagem %}
+      <p style="color: red;">{{ mensagem }}</p>
+    {% endif %}
+
+    {% if resultado %}
+      <h2>Resultado:</h2>
+      <p><strong>Placa:</strong> {{ resultado.placa }}</p>
+      <p><strong>Entrada:</strong> {{ resultado.hora_entrada }}</p>
+      <p><strong>Saída:</strong> {{ resultado.hora_saida if resultado.hora_saida else "Ainda no estacionamento" }}</p>
+      <img src="data:image/png;base64,{{ resultado.image_base64 }}" alt="Imagem da placa" style="max-width:100%; border-radius:6px;">
+    {% endif %}
+  </div>
+</body>
+</html>

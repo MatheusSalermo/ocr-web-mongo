@@ -50,3 +50,37 @@ button {
 button:hover {
   background-color: #0072d1;
 }
+
+.input-placa {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background-color: #2e2e33;
+  color: white;
+  outline: none;
+  box-shadow: inset 0 0 5px #000;
+  text-transform: uppercase;
+}
+
+.input-placa::placeholder {
+  color: #bbb;
+}
+
+.botao-buscar {
+  background-color: #008cff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.botao-buscar:hover {
+  background-color: #0072d1;
+}

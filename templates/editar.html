@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Registro</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>✏️ Editar Registro</h1>
+
+    <form method="post">
+      <label>Placa:</label>
+      <input type="text" name="placa" value="{{ registro.placa }}" class="input-placa" required>
+
+      <label>Hora de Entrada:</label>
+      <input type="text" name="hora_entrada" value="{{ registro.hora_entrada }}" class="input-placa" required>
+
+      <label>Hora de Saída:</label>
+      <input type="text" name="hora_saida" value="{{ registro.hora_saida or '' }}" class="input-placa">
+
+      <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <br>
+    <a href="/buscar" style="color:#00aaff;">⬅ Voltar para busca</a>
+  </div>
+</body>
+</html>

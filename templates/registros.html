@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Registros - PlacaView</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/static/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <div class="container">
@@ -12,14 +12,33 @@
     <a href="/" style="color: #00aaff;">⬅ Voltar para upload</a>
     <br><br>
 
+    <!-- ALERTA COM FLASH -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div style="background-color: #1f8b4c; padding: 12px; border-radius: 6px; margin-bottom: 20px;">
+          {% for message in messages %}
+            <p style="color: white; font-weight: bold;">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     {% if registros %}
       {% for r in registros %}
         <div style="background:#2b2b2b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
           <p><strong>Placa:</strong> {{ r.placa }}</p>
+          <p><strong>Entrada:</strong> {{ r.hora_entrada }}</p>
+          <p><strong>Saída:</strong> {{ r.hora_saida if r.hora_saida else "Ainda no estacionamento" }}</p>
           <img src="data:image/png;base64,{{ r.image_base64 }}" alt="Imagem da placa" style="max-width: 100%; border-radius: 6px;">
-          <form action="/delete/{{ r._id }}" method="post" style="margin-top:10px;">
-            <button type="submit" style="background-color: #ff4444;">Excluir</button>
-          </form>
+          
+          <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+            <form action="/editar/{{ r._id }}" method="get">
+              <button type="submit" style="background-color: #ffaa00;">✏️ Editar</button>
+            </form>
+            <form action="/delete/{{ r._id }}" method="post">
+              <button type="submit" style="background-color: #ff4444;">🗑 Excluir</button>
+            </form>
+          </div>
         </div>
       {% endfor %}
     {% else %}

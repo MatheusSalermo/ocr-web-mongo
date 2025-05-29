@@ -8,15 +8,29 @@
 </head>
 <body>
   <div class="container">
+    
     <h1>📸 PlacaView</h1>
     <p>Reconhecimento de placas com um clique</p>
 
-    <form action="/" method="post" enctype="multipart/form-data">
-      <label>Escolha uma imagem:</label>
-      <input type="file" name="image" accept="image/*" required>
-      <button type="submit">Enviar</button>
-    </form>
+   <form id="uploadForm" action="/" method="post" enctype="multipart/form-data">
+  <label for="image">Escolha uma imagem:</label>
+  <input type="file" id="image" name="image" accept="image/*">
 
+  <div style="margin: 10px 0;">
+    <button type="button" onclick="abrirCamera()">📷 Tirar Foto</button>
+  </div>
+
+  <div id="cameraContainer" style="display: none;">
+    <video id="video" width="100%" autoplay></video><br>
+    <button type="button" onclick="capturarFoto()">📸 Capturar</button>
+    <canvas id="canvas" style="display: none;"></canvas>
+  </div>
+
+  <!-- input oculto que receberá a imagem da câmera -->
+  <input type="hidden" name="image_base64" id="image_base64">
+
+  <button type="submit">Enviar</button>
+</form>
     {% if placa %}
       <h2>Placa Detectada: {{ placa }}</h2>
       <img src="data:image/png;base64,{{ image }}" alt="Resultado" style="max-width: 100%; border-radius: 8px;">
@@ -24,6 +38,47 @@
 
     <br>
     <a href="/registros" style="color: #00aaff;">📋 Ver registros salvos</a>
+    <a href="{{ url_for('buscar_placa') }}" style="color: #00aaff; display: inline-block; margin-top: 20px;">
+  🔍 Ir para Consulta de Placa
+</a>
   </div>
+
+  <script>
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const imageBase64Input = document.getElementById('image_base64');
+  const cameraContainer = document.getElementById('cameraContainer');
+
+  function abrirCamera() {
+    cameraContainer.style.display = 'block';
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        alert("Erro ao acessar a câmera: " + err);
+      });
+  }
+
+  function capturarFoto() {
+    const context = canvas.getContext('2d');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataURL = canvas.toDataURL('image/png');
+
+    // Preenche o input hidden com a imagem capturada
+    imageBase64Input.value = dataURL;
+
+    // Para o vídeo
+    const stream = video.srcObject;
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+
+    cameraContainer.style.display = 'none';
+    alert("📸 Foto capturada! Agora clique em 'Enviar'");
+  }
+</script>
+
 </body>
 </html>
