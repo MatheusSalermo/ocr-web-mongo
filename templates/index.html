@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>PlacaView</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📸 PlacaView</h1>
+    <p>Reconhecimento de placas com um clique</p>
+
+    <form action="/" method="post" enctype="multipart/form-data">
+      <label>Escolha uma imagem:</label>
+      <input type="file" name="image" accept="image/*" required>
+      <button type="submit">Enviar</button>
+    </form>
+
+    {% if placa %}
+      <h2>Placa Detectada: {{ placa }}</h2>
+      <img src="data:image/png;base64,{{ image }}" alt="Resultado" style="max-width: 100%; border-radius: 8px;">
+    {% endif %}
+
+    <br>
+    <a href="/registros" style="color: #00aaff;">📋 Ver registros salvos</a>
+  </div>
+</body>
+</html>
